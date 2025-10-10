@@ -945,7 +945,7 @@ class SpeechRecognizer:
         
         trimmed_audio = audio_data[:trimmed_length]
         
-        self.logger.debug(f"Trimmed audio: {len(audio_data)} -> {len(trimmed_audio)} samples "
+        sdk_logger.debug(f"Trimmed audio: {len(audio_data)} -> {len(trimmed_audio)} samples "
                          f"({len(trimmed_audio) / sample_rate:.2f}s)")
         
         return trimmed_audio
