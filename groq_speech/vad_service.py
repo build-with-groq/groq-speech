@@ -89,6 +89,8 @@ class VADConfig:
     noise_reduction_strength: float = 0.3  # Noise reduction strength (0.0-1.0) - Much more conservative
     webrtc_aggressiveness: int = 0  # WebRTC VAD aggressiveness (0-3, 0 = least aggressive)
     max_chunk_size_mb: float = 20.0  # Maximum chunk size before forcing chunk (20MB to stay under 24MB)
+    # Conservative silence detection threshold - only trigger on very quiet audio
+    practical_silence_threshold: float = 0.003  # RMS threshold for silence detection
 
 @dataclass
 class SpeechSegment:
@@ -458,11 +460,9 @@ class VADService:
             recent_rms = np.sqrt(np.mean(recent_audio**2))
             recent_max = np.max(np.abs(recent_audio))
             current_time = time.time()
-            
-            # Much more conservative silence detection - only trigger on very quiet audio
-            practical_silence_threshold = 0.003  # Very low threshold for conservative detection
-            
-            if recent_rms < practical_silence_threshold and recent_max < 0.01:
+
+            # Use configurable silence threshold for conservative detection
+            if recent_rms < self.config.practical_silence_threshold and recent_max < 0.01:
                 # Recent audio is very quiet - start or continue silence tracking
                 if self._silence_start_time is None:
                     self._silence_start_time = current_time
