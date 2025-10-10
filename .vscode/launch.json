@@ -1,0 +1,550 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug API Server",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/api/server.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "GROQ_SPEECH_VERBOSE": "true",
+                "GROQ_SPEECH_DEBUG": "true",
+                "LOG_LEVEL": "DEBUG"
+            },
+            "justMyCode": false,
+            "stopOnEntry": false,
+            "args": [],
+            "subProcess": true
+        },
+        {
+            "name": "Debug API Server Only (Recommended)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/api/server.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false,
+            "stopOnEntry": false,
+            "args": [],
+            "subProcess": true,
+            "presentation": {
+                "hidden": false,
+                "group": "API Debug",
+                "order": 1
+            }
+        },
+        {
+            "name": "Next.js: debug server-side",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "node",
+            "runtimeArgs": ["--inspect"],
+            "args": ["${workspaceFolder}/examples/groq-speech-ui/node_modules/next/dist/bin/next", "dev", "--turbopack"],
+            "envFile": "${workspaceFolder}/examples/groq-speech-ui/.env.local",
+            "cwd": "${workspaceFolder}/examples/groq-speech-ui",
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/examples/groq-speech-ui/**",
+                "!**/node_modules/**"
+            ],
+            "sourceMaps": true
+        },
+        {
+            "name": "Next.js: debug HTTPS server",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "dev:https"],
+            "envFile": "${workspaceFolder}/examples/groq-speech-ui/.env.local",
+            "cwd": "${workspaceFolder}/examples/groq-speech-ui",
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/examples/groq-speech-ui/**",
+                "!**/node_modules/**"
+            ],
+            "sourceMaps": true,
+            "env": {
+                "NEXT_PUBLIC_API_URL": "http://localhost:8000",
+                "NEXT_PUBLIC_VERBOSE": "true",
+                "NEXT_PUBLIC_DEBUG": "true",
+                "NEXT_DEV_MODE": "true",
+                "NEXT_HOT_RELOAD": "true",
+                "NEXT_PUBLIC_FRONTEND_URL": "https://localhost:3443"
+            }
+        },
+        {
+            "name": "Next.js: debug client-side",
+            "type": "chrome",
+            "request": "launch",
+            "url": "https://localhost:3443",
+            "webRoot": "${workspaceFolder}/examples/groq-speech-ui",
+            "sourceMaps": true,
+            "userDataDir": "${workspaceFolder}/.vscode/chrome-debug-${workspaceFolderBasename}-${timestamp}",
+            "runtimeArgs": [
+                "--disable-web-security",
+                "--disable-features=VizDisplayCompositor",
+                "--no-first-run",
+                "--no-default-browser-check",
+                "--disable-background-timer-throttling",
+                "--disable-backgrounding-occluded-windows",
+                "--disable-renderer-backgrounding",
+                "--disable-extensions",
+                "--disable-plugins",
+                "--disable-default-apps",
+                "--new-window",
+                "--force-new-window",
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-gpu",
+                "--disable-dev-shm-usage",
+                "--remote-debugging-port=0",
+                "--disable-background-mode",
+                "--disable-component-extensions-with-background-pages",
+                "--disable-translate",
+                "--hide-scrollbars",
+                "--no-pings",
+                "--single-process",
+                "--ignore-certificate-errors",
+                "--ignore-ssl-errors",
+                "--allow-running-insecure-content"
+            ]
+        },
+        {
+            "name": "Next.js: debug full stack",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "node",
+            "runtimeArgs": ["--inspect"],
+            "args": ["${workspaceFolder}/examples/groq-speech-ui/node_modules/next/dist/bin/next", "dev", "--turbopack"],
+            "envFile": "${workspaceFolder}/examples/groq-speech-ui/.env.local",
+            "cwd": "${workspaceFolder}/examples/groq-speech-ui",
+            "console": "integratedTerminal",
+            "serverReadyAction": {
+                "action": "debugWithChrome",
+                "pattern": "ready - started server on",
+                "uriFormat": "http://localhost:3000"
+            },
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/examples/groq-speech-ui/**",
+                "!**/node_modules/**"
+            ],
+            "sourceMaps": true
+        },
+        {
+            "name": "Next.js: debug server-only (No Chrome)",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "node",
+            "runtimeArgs": ["--inspect"],
+            "args": ["${workspaceFolder}/examples/groq-speech-ui/node_modules/next/dist/bin/next", "dev", "--turbopack"],
+            "envFile": "${workspaceFolder}/examples/groq-speech-ui/.env.local",
+            "cwd": "${workspaceFolder}/examples/groq-speech-ui",
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/examples/groq-speech-ui/**",
+                "!**/node_modules/**"
+            ],
+            "sourceMaps": true
+        },
+        {
+            "name": "Next.js: debug with HTTPS (Microphone Access)",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "node",
+            "runtimeArgs": ["--inspect"],
+            "args": ["${workspaceFolder}/examples/groq-speech-ui/scripts/https-dev-server.js"],
+            "envFile": "${workspaceFolder}/examples/groq-speech-ui/.env.local",
+            "cwd": "${workspaceFolder}/examples/groq-speech-ui",
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/examples/groq-speech-ui/**",
+                "!**/node_modules/**"
+            ],
+            "sourceMaps": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Next.js Debug",
+                "order": 2
+            }
+        },
+        {
+            "name": "Attach to Frontend (Next.js)",
+            "type": "node",
+            "request": "attach",
+            "port": 9229,
+            "restart": true,
+            "localRoot": "${workspaceFolder}/examples/groq-speech-ui",
+            "remoteRoot": "${workspaceFolder}/examples/groq-speech-ui",
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ],
+            "sourceMaps": true,
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/examples/groq-speech-ui/**",
+                "!**/node_modules/**"
+            ]
+        },
+        {
+            "name": "Debug Frontend (Browser)",
+            "type": "chrome",
+            "request": "launch",
+            "url": "https://localhost:3443",
+            "webRoot": "${workspaceFolder}/examples/groq-speech-ui",
+            "sourceMaps": true,
+            "userDataDir": "${workspaceFolder}/.vscode/chrome-debug-${workspaceFolderBasename}-${timestamp}",
+            "runtimeArgs": [
+                "--disable-web-security",
+                "--disable-features=VizDisplayCompositor",
+                "--no-first-run",
+                "--no-default-browser-check",
+                "--disable-background-timer-throttling",
+                "--disable-backgrounding-occluded-windows",
+                "--disable-renderer-backgrounding",
+                "--disable-extensions",
+                "--disable-plugins",
+                "--disable-default-apps",
+                "--new-window",
+                "--force-new-window",
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-gpu",
+                "--disable-dev-shm-usage",
+                "--remote-debugging-port=0",
+                "--disable-background-mode",
+                "--disable-component-extensions-with-background-pages",
+                "--disable-translate",
+                "--hide-scrollbars",
+                "--no-pings",
+                "--single-process",
+                "--ignore-certificate-errors",
+                "--ignore-ssl-errors",
+                "--allow-running-insecure-content"
+            ]
+        },
+        {
+            "name": "Debug Frontend (Edge)",
+            "type": "msedge",
+            "request": "launch",
+            "url": "https://localhost:3443",
+            "webRoot": "${workspaceFolder}/examples/groq-speech-ui",
+            "sourceMaps": true,
+            "userDataDir": "${workspaceFolder}/.vscode/edge-debug-${workspaceFolderBasename}-${timestamp}",
+            "runtimeArgs": [
+                "--disable-web-security",
+                "--disable-features=VizDisplayCompositor",
+                "--no-first-run",
+                "--no-default-browser-check",
+                "--disable-background-timer-throttling",
+                "--disable-backgrounding-occluded-windows",
+                "--disable-renderer-backgrounding",
+                "--disable-extensions",
+                "--disable-plugins",
+                "--disable-default-apps",
+                "--new-window",
+                "--force-new-window",
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--remote-debugging-port=0",
+                "--ignore-certificate-errors",
+                "--ignore-ssl-errors",
+                "--allow-running-insecure-content"
+            ]
+        },
+        {
+            "name": "Debug Frontend (Manual Browser)",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}/examples/groq-speech-ui",
+            "sourceMaps": true,
+            "url": "https://localhost:3443"
+        },
+        {
+            "name": "Debug Speech Demo - File Non-Diarized",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/speech_demo.py",
+            "args": [
+                "--file", 
+                "test1.wav"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/examples",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false,
+            "stopOnEntry": false
+        },
+        {
+            "name": "Debug Speech Demo - File Diarized",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/speech_demo.py",
+            "args": [
+                "--file", 
+                "test1.wav", 
+                "--diarize"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/examples",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false,
+            "stopOnEntry": false
+        },
+        {
+            "name": "Debug Speech Demo - Microphone Single",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/speech_demo.py",
+            "args": [
+                "--microphone-mode", 
+                "single"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false,
+            "stopOnEntry": false
+        },
+        {
+            "name": "Debug Speech Demo - Microphone Continuous",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/speech_demo.py",
+            "args": [
+                "--microphone-mode", 
+                "continuous"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false,
+            "stopOnEntry": false
+        },
+        {
+            "name": "Debug Speech Demo - Microphone Single Diarize",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/speech_demo.py",
+            "args": [
+                "--microphone-mode", 
+                "single",
+                "--diarize",
+                "true"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false,
+            "stopOnEntry": false
+        },
+        {
+            "name": "Debug Speech Demo - Translation",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/speech_demo.py",
+            "args": [
+                "--microphone-mode", 
+                "continuous",
+                "--operation",
+                "translation"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false,
+            "stopOnEntry": false
+        },
+        {
+            "name": "Debug Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false,
+            "stopOnEntry": false
+        },
+        {
+            "name": "Debug API Server Only (WebSocket)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/api/server.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "DEBUG": "true"
+            },
+            "justMyCode": false,
+            "stopOnEntry": false,
+            "args": [],
+            "subProcess": true,
+            "presentation": {
+                "hidden": false,
+                "group": "API Debug",
+                "order": 1
+            }
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Next.js: debug full stack",
+            "configurations": [
+                "Next.js: debug server-side",
+                "Next.js: debug client-side"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Next.js Debug",
+                "order": 1
+            }
+        },
+        {
+            "name": "Debug Full Stack (API + Next.js)",
+            "configurations": [
+                "Debug API Server",
+                "Next.js: debug HTTPS server"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Full Stack",
+                "order": 1
+            }
+        },
+        {
+            "name": "Debug Full Stack (API + Next.js - No Chrome)",
+            "configurations": [
+                "Debug API Server",
+                "Next.js: debug server-only (No Chrome)"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Full Stack",
+                "order": 2
+            }
+        },
+        {
+            "name": "Debug Full Stack (Safe Mode)",
+            "configurations": [
+                "Debug API Server Only (Recommended)",
+                "Next.js: debug HTTPS server"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Full Stack",
+                "order": 1
+            }
+        },
+        {
+            "name": "Debug Full Stack (HTTPS + Microphone)",
+            "configurations": [
+                "Debug API Server Only (Recommended)",
+                "Next.js: debug HTTPS server"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Full Stack",
+                "order": 1
+            }
+        },
+        {
+            "name": "Debug Full Stack (Compound)",
+            "configurations": [
+                "Debug API Server",
+                "Next.js: debug full stack"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Full Stack",
+                "order": 2
+            }
+        },
+        {
+            "name": "Debug Full Stack (Browser)",
+            "configurations": [
+                "Debug API Server",
+                "Debug Frontend (Browser)"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Full Stack",
+                "order": 2
+            }
+        },
+        {
+            "name": "Debug Full Stack (Edge)",
+            "configurations": [
+                "Debug API Server",
+                "Debug Frontend (Edge)"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Full Stack",
+                "order": 3
+            }
+        },
+        {
+            "name": "Debug Full Stack (Attach Mode)",
+            "configurations": [
+                "Debug API Server",
+                "Attach to Frontend (Next.js)"
+            ],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Full Stack",
+                "order": 3
+            }
+        }
+    ]
+}

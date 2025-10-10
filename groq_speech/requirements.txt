@@ -1,0 +1,27 @@
+# Core Groq Speech SDK dependencies
+groq>=0.4.0
+pyaudio>=0.2.11
+numpy>=1.21.0
+soundfile>=0.10.3
+python-dotenv>=0.19.0
+
+# Speaker Diarization dependencies
+pyannote.audio>=3.0.0
+torch>=1.9.0
+torchaudio>=0.9.0
+
+# Enhanced diarization features
+scipy>=1.7.0
+librosa>=0.9.0
+scikit-learn>=1.0.0
+
+# Voice Activity Detection
+silero-vad>=4.0.0
+webrtcvad>=2.0.10
+
+# Audio Processing and Noise Filtering
+noisereduce>=3.0.0
+pydub>=0.25.1
+
+# Performance and caching
+pickle5>=0.0.11; python_version < "3.8"

@@ -1,0 +1,75 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+docs/
+!README.md
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env*
+!.env.template
+
+# Node modules (will be installed in container)
+node_modules/
+examples/groq-speech-ui/node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Test files
+tests/
+test_*.py
+*_test.py
+
+# Development scripts
+scripts/
+run-dev.sh
+start-*.sh
+cleanup-*.sh
+
+# Docker files (except the ones we need)
+docker-compose*.yml
+Dockerfile*
+!deployment/docker/Dockerfile.api
+!deployment/docker/Dockerfile.ui
+!deployment/docker/docker-compose.yml
+
+# Build artifacts
+dist/
+build/
+.next/
+out/
+
+# Coverage reports
+coverage/
+
+# Deployment
+deployment/gcp/
+deployment/docker/README.md
+deployment/docker/setup-env.sh
+deployment/docker/deploy-*.sh
