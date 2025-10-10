@@ -71,7 +71,7 @@ def _trim_silence_from_end(audio_data, sample_rate, silence_threshold=0.01, min_
     # Find the last non-silent window
     last_non_silent = len(audio_data)
     
-    for i in range(len(audio_data) - window_size, 0, -window_size):
+    for i in range(len(audio_data) - window_size, -1, -window_size):
         window = audio_data[i:i + window_size]
         rms = np.sqrt(np.mean(window**2))
         
