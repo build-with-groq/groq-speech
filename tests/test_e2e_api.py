@@ -79,7 +79,7 @@ class TestE2EAPI(unittest.TestCase):
             if response.status_code == 200:
                 print("✅ API server already running")
                 return
-        except:
+        except requests.exceptions.RequestException:
             pass
         
         print("🚀 Starting API server...")
@@ -96,7 +96,7 @@ class TestE2EAPI(unittest.TestCase):
                 if response.status_code == 200:
                     print("✅ API server is ready")
                     return
-            except:
+            except requests.exceptions.RequestException:
                 pass
             
             time.sleep(1)
@@ -327,7 +327,7 @@ class TestAPIIntegration(unittest.TestCase):
         try:
             response = requests.get(f"{API_BASE_URL}/health", timeout=5)
             self.assertEqual(response.status_code, 200)
-        except:
+        except requests.exceptions.RequestException:
             self.skipTest("API server not available")
     
     def test_concurrent_requests(self):
@@ -336,7 +336,7 @@ class TestAPIIntegration(unittest.TestCase):
             response = requests.get(f"{API_BASE_URL}/health", timeout=5)
             if response.status_code != 200:
                 self.skipTest("API server not available")
-        except:
+        except requests.exceptions.RequestException:
             self.skipTest("API server not available")
         
         # Test concurrent requests
