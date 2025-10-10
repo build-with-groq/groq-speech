@@ -1,0 +1,29 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "ms-python.flake8",
+        "ms-python.mypy-type-checker",
+        "ms-python.pytest-adapter",
+        "ms-vscode.vscode-json",
+        "redhat.vscode-yaml",
+        "ms-vscode.vscode-markdown",
+        "ms-vscode.vscode-git",
+        "ms-vscode.vscode-git-graph",
+        "eamodio.gitlens",
+        "ms-vscode.vscode-docker",
+        "ms-vscode.vscode-github",
+        "ms-vscode.vscode-js-debug",
+        "ms-vscode.vscode-typescript-next",
+        "ms-vscode.vscode-eslint",
+        "ms-vscode.vscode-prettier",
+        "ms-vscode.vscode-jest",
+        "ms-vscode.vscode-jest-adapter",
+        "ms-vscode.vscode-jest-runner",
+        "ms-vscode.vscode-jest-snippets",
+        "ms-vscode.vscode-jest-adapter",
+        "ms-vscode.vscode-jest-runner",
+        "ms-vscode.vscode-jest-snippets"
+    ]
+}

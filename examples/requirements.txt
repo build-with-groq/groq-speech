@@ -1,0 +1,9 @@
+# Examples dependencies
+# Note: groq_speech package is installed via the root setup.py
+# when running pip install -e . from the project root
+
+# CLI example dependencies (if any additional ones needed)
+# Currently just uses the core SDK
+
+# Real-time audio recording for continuous diarization
+pyaudio>=0.2.11

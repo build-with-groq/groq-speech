@@ -1,0 +1,61 @@
+# Multi-stage build for Groq Speech API (Cloud Run)
+FROM python:3.11-slim as builder
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements and install Python dependencies
+COPY api/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install groq-speech package dependencies first
+COPY groq_speech/requirements.txt ./groq_speech_requirements.txt
+RUN pip install --no-cache-dir -r groq_speech_requirements.txt
+
+# Install groq-speech package
+COPY groq_speech/ ./groq_speech/
+COPY setup.py .
+COPY README.md .
+RUN pip install -e .
+
+# Production stage
+FROM python:3.11-slim
+
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN useradd --create-home --shell /bin/bash app
+
+# Set working directory
+WORKDIR /app
+
+# Copy Python packages from builder
+COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+
+# Copy application code
+COPY api/ ./api/
+COPY groq_speech/ ./groq_speech/
+
+# Change ownership to app user
+RUN chown -R app:app /app
+USER app
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:${PORT:-8000}/health || exit 1
+
+# Start the application
+CMD ["sh", "-c", "python -m uvicorn api.server:app --host 0.0.0.0 --port ${PORT:-8000}"]

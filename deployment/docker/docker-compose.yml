@@ -1,0 +1,47 @@
+services:
+  # Groq Speech API Server
+  groq-speech-api:
+    build:
+      context: ../..
+      dockerfile: deployment/docker/Dockerfile.api
+    container_name: groq-speech-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.api
+    networks:
+      - groq-speech-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Groq Speech UI
+  groq-speech-ui:
+    build:
+      context: ../..
+      dockerfile: deployment/docker/Dockerfile.ui
+    container_name: groq-speech-ui
+    ports:
+      - "3443:3443"
+    env_file:
+      - .env.ui
+    networks:
+      - groq-speech-network
+    restart: unless-stopped
+    depends_on:
+      groq-speech-api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "--no-check-certificate", "https://localhost:3443/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+networks:
+  groq-speech-network:
+    driver: bridge

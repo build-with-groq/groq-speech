@@ -1,0 +1,108 @@
+# Optimized Dockerfile for Groq Speech API Server
+# Multi-stage build for minimal production image
+
+# Stage 1: Build dependencies
+FROM python:3.11-slim as builder
+
+# Set build environment
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PIP_NO_CACHE_DIR=1
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libportaudio2 \
+    libportaudiocpp0 \
+    portaudio19-dev \
+    libasound2-dev \
+    libsndfile1-dev \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create virtual environment
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Install Python dependencies
+COPY groq_speech/requirements.txt /tmp/sdk-requirements.txt
+COPY api/requirements.txt /tmp/api-requirements.txt
+
+# Install SDK dependencies
+RUN pip install --upgrade pip && \
+    pip install -r /tmp/sdk-requirements.txt
+
+# Install API dependencies
+RUN pip install -r /tmp/api-requirements.txt
+
+# Copy and install SDK
+COPY groq_speech/ /tmp/groq_speech/
+COPY setup.py /tmp/
+COPY README.md /tmp/
+WORKDIR /tmp
+RUN pip install -e .
+
+# Stage 2: Production image
+FROM python:3.11-slim as production
+
+# Set production environment
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Install runtime dependencies only
+RUN apt-get update && apt-get install -y \
+    libportaudio2 \
+    libportaudiocpp0 \
+    libasound2 \
+    libsndfile1 \
+    ffmpeg \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy virtual environment from builder
+COPY --from=builder /opt/venv /opt/venv
+
+# Create non-root user
+RUN groupadd -r groq && useradd -r -g groq groq
+
+# Create necessary directories for diarization and caching
+RUN mkdir -p /home/groq/.config/matplotlib \
+    && mkdir -p /home/groq/.cache \
+    && mkdir -p /home/groq/.local/share \
+    && mkdir -p /tmp/matplotlib \
+    && chmod 755 /home/groq \
+    && chmod 755 /home/groq/.config \
+    && chmod 755 /home/groq/.cache \
+    && chmod 755 /home/groq/.local \
+    && chmod 755 /home/groq/.local/share
+
+# Create app directory
+WORKDIR /app
+
+# Copy only necessary files
+COPY groq_speech/ ./groq_speech/
+COPY api/ ./api/
+COPY setup.py ./
+
+# Set ownership
+RUN chown -R groq:groq /app /home/groq /tmp/matplotlib
+
+# Set environment variables for matplotlib and fontconfig
+ENV MPLCONFIGDIR=/tmp/matplotlib
+ENV FONTCONFIG_PATH=/etc/fonts
+ENV HOME=/home/groq
+
+# Switch to non-root user
+USER groq
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Default command
+CMD ["uvicorn", "api.server:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
