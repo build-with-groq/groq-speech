@@ -14,7 +14,7 @@ https://github.com/user-attachments/assets/a110ca11-a1c4-472d-aca6-dbb9cad6b663
 
 ### **Prerequisites**
 - Python 3.8+
-- Node.js 18+ (for web UI)
+- Node.js 22 (for web UI)
 - Groq API key ([Get one here](https://console.groq.com/keys))
 - Hugging Face token (**Required for diarization** - See [HuggingFace Models & License Requirements](#️-huggingface-models--license-requirements-required-for-diarization))
 
@@ -24,7 +24,7 @@ Run the automated setup script to install all dependencies and configure environ
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/build-with-groq/groq-speech
 cd groq-speech
 
 # Run the setup script (installs everything)
@@ -55,7 +55,7 @@ If you prefer manual setup:
 
 1. **Clone the repository:**
 ```bash
-git clone <repository-url>
+git clone https://github.com/build-with-groq/groq-speech
 cd groq-speech
 ```
 
@@ -572,8 +572,20 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 For issues and questions:
 1. Check the [documentation](docs/)
-2. Review [existing issues](https://github.com/your-repo/issues)
+2. Review [existing issues](https://github.com/build-with-groq/groq-speech/issues)
 3. Create a new issue with detailed information
+
+---
+
+## 👥 **Contributors**
+
+**Built with ❤️ by:**
+- **Sreenivas Manyam Rajaram** - [LinkedIn](https://www.linkedin.com/in/sreenivas-manyam-rajaram/)
+
+**Technologies:**
+- [Groq](https://groq.com/) - Lightning-fast AI inference
+- [Pyannote.audio](https://github.com/pyannote/pyannote-audio) - Speaker diarization
+- Modern web technologies (Next.js, React, TypeScript)
 
 ---
 
