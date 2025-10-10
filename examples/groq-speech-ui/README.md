@@ -40,7 +40,7 @@ A comprehensive Next.js application that demonstrates real-time speech transcrip
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 20+ or 22
 - npm or yarn
 - Groq API key (optional for mock mode)
 
@@ -48,8 +48,8 @@ A comprehensive Next.js application that demonstrates real-time speech transcrip
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd groq-speech-ui
+   git clone https://github.com/build-with-groq/groq-speech
+   cd groq-speech/examples/groq-speech-ui
    ```
 
 2. **Install dependencies**

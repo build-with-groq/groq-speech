@@ -143,7 +143,7 @@ This Groq Speech Demo Solution is a demonstrative speech recognition and transla
 ### First-Time Setup
 ```bash
 # Clone and run setup
-git clone <repository-url>
+git clone https://github.com/build-with-groq/groq-speech
 cd groq-speech
 ./setup.sh
 
@@ -215,7 +215,7 @@ For issues and questions:
 1. Check the [Quick Start Guide](QUICKSTART.md) for setup help
 2. Review [Debugging Guide](DEBUGGING_GUIDE.md) for common issues
 3. Check the [Library Reference](Library_REFERENCE.md) for API usage
-4. Review [existing issues](https://github.com/your-repo/issues)
+4. Review [existing issues](https://github.com/build-with-groq/groq-speech/issues)
 5. Create a new issue with detailed information
 
 ## 📄 License
@@ -227,4 +227,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 **Built with ❤️ using Groq, Pyannote.audio, and modern web technologies.**
 
 **Last Updated**: October 2025  
-**Maintained By**: Groq Speech Library Team
+**Maintained By**: Build with Groq

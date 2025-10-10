@@ -19,7 +19,7 @@ Before you begin, ensure you have:
 
 ```bash
 # Clone and navigate to the repository
-git clone <repository-url>
+git clone https://github.com/build-with-groq/groq-speech
 cd groq-speech
 
 # Run the automated setup script

@@ -2,7 +2,7 @@
 # Multi-stage build for minimal production image
 
 # Stage 1: Build Next.js app
-FROM node:18-slim as builder
+FROM node:22-slim as builder
 
 # Install build dependencies for native modules
 RUN apt-get update && apt-get install -y \
@@ -39,7 +39,7 @@ ENV NODE_ENV=production
 RUN npm run build
 
 # Stage 2: Production image with HTTPS support
-FROM node:18-slim as production
+FROM node:22-slim as production
 
 # Set production environment
 ENV NODE_ENV=production

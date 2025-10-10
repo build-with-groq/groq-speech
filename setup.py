@@ -24,7 +24,7 @@ setup(
     description="A Python SDK for Groq's speech services, providing real-time speech-to-text capabilities",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
-    url="https://github.com/groq/groq-speech-sdk",
+    url="https://github.com/build-with-groq/groq-speech",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -71,8 +71,8 @@ setup(
     zip_safe=False,
     keywords="speech recognition groq audio transcription whisper",
     project_urls={
-        "Bug Reports": "https://github.com/groq/groq-speech-sdk/issues",
-        "Source": "https://github.com/groq/groq-speech-sdk",
-        "Documentation": "https://github.com/groq/groq-speech-sdk#readme",
+        "Bug Reports": "https://github.com/build-with-groq/groq-speech/issues",
+        "Source": "https://github.com/build-with-groq/groq-speech",
+        "Documentation": "https://github.com/build-with-groq/groq-speech#readme",
     },
 ) 

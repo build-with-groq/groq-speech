@@ -10,14 +10,14 @@ Thank you for your interest in contributing to the Groq Speech Solution! This gu
 
 ### **Prerequisites**
 - Python 3.8+
-- Node.js 18+
+- Node.js 22+
 - Git
 - Docker (optional, for testing)
 
 ### **Development Setup**
 ```bash
 # Fork and clone the repository
-git clone https://github.com/your-username/groq-speech.git
+git clone https://github.com/build-with-groq/groq-speech
 cd groq-speech
 
 # Install Python dependencies

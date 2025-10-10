@@ -1,5 +1,5 @@
 # Multi-stage build for Groq Speech UI (Cloud Run)
-FROM node:18-slim as builder
+FROM node:22-slim as builder
 
 # Install build dependencies for native modules
 RUN apt-get update && apt-get install -y \
@@ -33,7 +33,7 @@ ENV NODE_ENV=production
 RUN npm run build
 
 # Production stage
-FROM node:18-slim as production
+FROM node:22-slim as production
 
 # Set production environment
 ENV NODE_ENV=production
