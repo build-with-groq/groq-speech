@@ -6,7 +6,7 @@ A comprehensive **demonstration project** showcasing speech recognition and tran
 
 ## 🎥 **Video Demo**
 
-https://github.com/user-attachments/assets/a110ca11-a1c4-472d-aca6-dbb9cad6b663
+https://github.com/user-attachments/assets/ab091b11-c41b-4390-8899-26aef9608baa
 
 ---
 
