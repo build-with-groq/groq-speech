@@ -16,7 +16,9 @@ https://github.com/user-attachments/assets/a110ca11-a1c4-472d-aca6-dbb9cad6b663
 - Python 3.8+
 - Node.js 22 (for web UI)
 - Groq API key ([Get one here](https://console.groq.com/keys))
-- Hugging Face token (**Required for diarization** - See [HuggingFace Models & License Requirements](#️-huggingface-models--license-requirements-required-for-diarization))
+- Hugging Face token (**Required for diarization**):
+  - **Get token:** [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)
+  - **⚠️ MUST accept model licenses first** - See [HuggingFace Models & License Requirements](#️-huggingface-models--license-requirements-required-for-diarization) below
 
 ### **Automated Setup (Recommended)**
 
@@ -41,7 +43,7 @@ After setup completes:
 1. **Edit `.env.api`** and add your API keys:
    ```bash
    GROQ_API_KEY=your_actual_groq_api_key_here
-   HF_TOKEN=your_huggingface_token_here  # Required for diarization - see HuggingFace section below
+   HF_TOKEN=your_huggingface_token_here  # Get from: https://huggingface.co/settings/tokens (see HuggingFace section below for license requirements)
    ```
 
 2. **Activate the virtual environment** (required for Python commands):
@@ -93,7 +95,7 @@ cp .env.ui.template .env.ui
 
 # Edit .env.api with your API keys
 # GROQ_API_KEY=your_actual_groq_api_key_here
-# HF_TOKEN=your_huggingface_token_here  # Required for diarization
+# HF_TOKEN=your_huggingface_token_here  # Get from: https://huggingface.co/settings/tokens (see HuggingFace section below for license requirements)
 
 # .env.ui defaults should work for local development
 ```
@@ -200,6 +202,129 @@ docker-compose -f deployment/docker/docker-compose.yml logs -f groq-speech-ui
 - Create `deployment/docker/.env.api` and `deployment/docker/.env.ui` files
 - The `deploy-local.sh` script will copy templates if they don't exist
 - Make sure to set your actual `GROQ_API_KEY` and `HF_TOKEN` in `.env.api`
+
+---
+
+## ⚠️ **HuggingFace Models & License Requirements** (Required for Diarization)
+
+> **🚨 IMPORTANT:** You **MUST** accept model licenses on HuggingFace **BEFORE** using diarization features, or you will encounter authentication errors.
+
+### **Models Used**
+
+This project uses the following HuggingFace models for **speaker diarization**:
+
+> ### 🎯 **Required Models**
+> 
+> 1. **[pyannote/segmentation-3.0](https://huggingface.co/pyannote/segmentation-3.0)**
+>    - Purpose: Audio segmentation and speaker turn detection
+>    - License: MIT License
+> 
+> 2. **[pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1)**
+>    - Purpose: Complete speaker diarization pipeline
+>    - License: MIT License
+
+### **⚠️ License Acceptance Required**
+
+**❌ What happens if you don't accept the licenses:**
+```
+GatedRepoError: Access to model pyannote/speaker-diarization-3.1 is restricted.
+You must be authenticated to access it and have accepted the model's terms and conditions.
+```
+
+Or you might see:
+```
+OSError: You are trying to access a gated repo.
+Make sure to request access at https://huggingface.co/pyannote/speaker-diarization-3.1
+and pass a token having permission to this repo either by logging in with 
+`huggingface-cli login` or by passing `use_auth_token=<your_token>`.
+```
+
+### **✅ How to Accept Model Licenses**
+
+Follow these steps **BEFORE** running diarization:
+
+#### **Step 1: Create HuggingFace Account**
+1. Go to [https://huggingface.co/join](https://huggingface.co/join)
+2. Create a free account (if you don't have one)
+
+#### **Step 2: Accept Model Licenses**
+
+You must accept the license for **each model individually**:
+
+**For pyannote/segmentation-3.0:**
+1. Visit: [https://huggingface.co/pyannote/segmentation-3.0](https://huggingface.co/pyannote/segmentation-3.0)
+2. Scroll down to the model card
+3. Click **"Agree and access repository"** button
+4. You may need to fill out a form with:
+   - Your name
+   - Organization (can be "Individual" or "Personal")
+   - Country
+   - Agree to terms checkbox
+
+**For pyannote/speaker-diarization-3.1:**
+1. Visit: [https://huggingface.co/pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1)
+2. Scroll down to the model card
+3. Click **"Agree and access repository"** button
+4. Fill out the same form as above
+
+**Example of what you'll see:**
+```
+┌─────────────────────────────────────────────────────────┐
+│  Access pyannote/speaker-diarization-3.1                │
+│                                                           │
+│  By clicking below, you agree to share your contact      │
+│  information (username and email) with the model authors.│
+│                                                           │
+│  Name:     [Your Name]                                   │
+│  Email:    [your@email.com]                              │
+│  Org:      [Individual/Company]                          │
+│  Country:  [Your Country]                                │
+│                                                           │
+│  ☐ I have read the License and agree to its terms       │
+│                                                           │
+│  [Agree and Access Repository]                           │
+└─────────────────────────────────────────────────────────┘
+```
+
+#### **Step 3: Get Your HuggingFace Token**
+1. Go to [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)
+2. Click **"New token"**
+3. Name it (e.g., "groq-speech-diarization")
+4. Select **"Read"** permission (minimum required)
+5. Click **"Generate token"**
+6. **Copy the token** (you won't be able to see it again!)
+
+#### **Step 4: Add Token to Environment**
+
+Add the token to your `.env.api` file:
+```bash
+HF_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+**Note:** HuggingFace tokens start with `hf_`
+
+### **🧪 Testing License Access**
+
+To verify your licenses are accepted, run:
+```bash
+# Activate virtual environment
+source .venv/bin/activate
+
+# Test with a simple diarization
+python examples/speech_demo.py --file examples/test_audio.wav --diarize
+```
+
+If licenses are properly accepted, you should see:
+```
+🎭 Running CORRECT diarization pipeline...
+   1. Pyannote.audio → Speaker detection
+   ✅ Pipeline loaded and moved to cuda
+   ✅ Detected X speaker segments
+```
+
+If licenses are NOT accepted, you'll see authentication errors as shown above.
+
+---
 
 ## 🏗️ **Architecture**
 
@@ -373,7 +498,7 @@ Used by: SDK, speech_demo.py, API server
 # Required: Groq API Key
 GROQ_API_KEY=your_groq_api_key_here
 
-# Required for speaker diarization (see HuggingFace Models section)
+# Required for speaker diarization (Get from: https://huggingface.co/settings/tokens - see HuggingFace Models section for license requirements)
 HF_TOKEN=your_huggingface_token_here
 
 # Optional: API Configuration
@@ -406,128 +531,7 @@ NEXT_PUBLIC_DEBUG=false
 
 **Getting API Keys:**
 - **GROQ_API_KEY**: Get from [Groq Console](https://console.groq.com/keys)
-- **HF_TOKEN**: See detailed instructions in the section below ⬇️
-
----
-
-## ⚠️ **HuggingFace Models & License Requirements** (Required for Diarization)
-
-### **Models Used**
-
-This project uses the following HuggingFace models for **speaker diarization**:
-
-> ### 🎯 **Required Models**
-> 
-> 1. **[pyannote/segmentation-3.0](https://huggingface.co/pyannote/segmentation-3.0)**
->    - Purpose: Audio segmentation and speaker turn detection
->    - License: MIT License
-> 
-> 2. **[pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1)**
->    - Purpose: Complete speaker diarization pipeline
->    - License: MIT License
-
-### **⚠️ License Acceptance Required**
-
-**CRITICAL:** You **MUST** accept the model licenses on HuggingFace **BEFORE** using diarization features. 
-
-**❌ What happens if you don't accept the licenses:**
-```
-GatedRepoError: Access to model pyannote/speaker-diarization-3.1 is restricted.
-You must be authenticated to access it and have accepted the model's terms and conditions.
-```
-
-Or you might see:
-```
-OSError: You are trying to access a gated repo.
-Make sure to request access at https://huggingface.co/pyannote/speaker-diarization-3.1
-and pass a token having permission to this repo either by logging in with 
-`huggingface-cli login` or by passing `use_auth_token=<your_token>`.
-```
-
-### **✅ How to Accept Model Licenses**
-
-Follow these steps **BEFORE** running diarization:
-
-#### **Step 1: Create HuggingFace Account**
-1. Go to [https://huggingface.co/join](https://huggingface.co/join)
-2. Create a free account (if you don't have one)
-
-#### **Step 2: Accept Model Licenses**
-
-You must accept the license for **each model individually**:
-
-**For pyannote/segmentation-3.0:**
-1. Visit: [https://huggingface.co/pyannote/segmentation-3.0](https://huggingface.co/pyannote/segmentation-3.0)
-2. Scroll down to the model card
-3. Click **"Agree and access repository"** button
-4. You may need to fill out a form with:
-   - Your name
-   - Organization (can be "Individual" or "Personal")
-   - Country
-   - Agree to terms checkbox
-
-**For pyannote/speaker-diarization-3.1:**
-1. Visit: [https://huggingface.co/pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1)
-2. Scroll down to the model card
-3. Click **"Agree and access repository"** button
-4. Fill out the same form as above
-
-**Example of what you'll see:**
-```
-┌─────────────────────────────────────────────────────────┐
-│  Access pyannote/speaker-diarization-3.1                │
-│                                                           │
-│  By clicking below, you agree to share your contact      │
-│  information (username and email) with the model authors.│
-│                                                           │
-│  Name:     [Your Name]                                   │
-│  Email:    [your@email.com]                              │
-│  Org:      [Individual/Company]                          │
-│  Country:  [Your Country]                                │
-│                                                           │
-│  ☐ I have read the License and agree to its terms       │
-│                                                           │
-│  [Agree and Access Repository]                           │
-└─────────────────────────────────────────────────────────┘
-```
-
-#### **Step 3: Get Your HuggingFace Token**
-1. Go to [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)
-2. Click **"New token"**
-3. Name it (e.g., "groq-speech-diarization")
-4. Select **"Read"** permission (minimum required)
-5. Click **"Generate token"**
-6. **Copy the token** (you won't be able to see it again!)
-
-#### **Step 4: Add Token to Environment**
-
-Add the token to your `.env.api` file:
-```bash
-HF_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-**Note:** HuggingFace tokens start with `hf_`
-
-### **🧪 Testing License Access**
-
-To verify your licenses are accepted, run:
-```bash
-# Activate virtual environment
-source .venv/bin/activate
-
-# Test with a simple diarization
-python examples/speech_demo.py --file examples/test_audio.wav --diarize
-```
-
-If licenses are properly accepted, you should see:
-```
-🎭 Running CORRECT diarization pipeline...
-   1. Pyannote.audio → Speaker detection
-   ✅ Pipeline loaded and moved to cuda
-   ✅ Detected X speaker segments
-```
-
-If licenses are NOT accepted, you'll see authentication errors as shown above.
+- **HF_TOKEN**: Get from [HuggingFace Tokens](https://huggingface.co/settings/tokens) - See [HuggingFace Models & License Requirements](#️-huggingface-models--license-requirements-required-for-diarization) section above for complete setup instructions
 
 ### **Audio Settings**
 - **Sample Rate**: 16kHz (standard)
